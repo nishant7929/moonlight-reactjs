@@ -53,7 +53,7 @@ const RightbarFilms: FunctionComponent<RightbarFilmsProps> = ({
                       src={resizeImage(item.poster_path, "w154")}
                       className="w-full h-full object-cover rounded-md"
                       alt="poster"
-                      effect="blur"
+                      effect="opacity"
                     />
                   </div>
                   <div className="flex-grow">
