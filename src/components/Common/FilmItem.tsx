@@ -23,6 +23,7 @@ const FilmItem: FunctionComponent<FilmItemProps> = ({ item }) => {
       <div className="shadow-sm bg-dark-darken pb-2 rounded-md overflow-hidden hover:scale-105 hover:brightness-110 transition duration-300 relative group">
         <LazyLoadImage
           alt="Poster film"
+          style={{ height: '284px' }}
           src={
             item.media_type === "person"
               ? resizeImage(item.profile_path || "", "w342")
