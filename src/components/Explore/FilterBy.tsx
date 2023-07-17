@@ -14,7 +14,7 @@ const FilterBy: FunctionComponent<FilterByProps> = ({ currentTab }) => {
   const [filter] = useAutoAnimate();
 
   const { isMobile } = useCurrentViewportView();
-  const [openSort, setOpenSort] = useState(isMobile ? false : true);
+  const [openFilter, setOpenFilter] = useState(isMobile ? false : true);
 
   return (
     <div
