@@ -4,11 +4,13 @@ import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import { useSearchParams } from "react-router-dom";
 import Select from "react-select";
 import { useCurrentParams } from "../../hooks/useCurrentParams";
+import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 
 interface SortByProps {}
 
 const SortBy: FunctionComponent<SortByProps> = () => {
-  const [openSort, setOpenSort] = useState(true);
+  const { isMobile } = useCurrentViewportView();
+  const [openSort, setOpenSort] = useState(isMobile ? false : true);
   const [parent] = useAutoAnimate();
 
   const [searchParams, setSearchParams] = useSearchParams();
