@@ -4,6 +4,7 @@ import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import FilterByDate from "./FilterByDate";
 import FilterByGenres from "./FilterByGenres";
 import FilterByRating from "./FilterByRating";
+import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 
 interface FilterByProps {
   currentTab: string;
@@ -12,7 +13,8 @@ interface FilterByProps {
 const FilterBy: FunctionComponent<FilterByProps> = ({ currentTab }) => {
   const [filter] = useAutoAnimate();
 
-  const [openFilter, setOpenFilter] = useState(true);
+  const { isMobile } = useCurrentViewportView();
+  const [openFilter, setOpenFilter] = useState(isMobile ? false : true);
 
   return (
     <div
