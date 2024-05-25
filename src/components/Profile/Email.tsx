@@ -2,7 +2,8 @@ import { FunctionComponent } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
 import { useAppSelector } from "../../store/hooks";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
+
 interface EmailProps {
   setIsShowPromptReAuthFor: any;
   isUpdatingEmail: boolean;
@@ -20,7 +21,6 @@ const Email: FunctionComponent<EmailProps> = ({
 
   return (
     <>
-      <ToastContainer />
       <div>
         <p className="text-white text-lg">Email</p>
 
@@ -44,13 +44,7 @@ const Email: FunctionComponent<EmailProps> = ({
                 e.preventDefault();
                 if (!emailValueRef.current.value.trim().length) {
                   toast.error("You gotta type something", {
-                    position: "top-right",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
+                    // position: "top-right"
                   });
                   return;
                 }

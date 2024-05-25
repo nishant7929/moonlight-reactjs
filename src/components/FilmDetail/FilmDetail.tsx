@@ -12,7 +12,7 @@ import { BsFillPlayFill, BsShareFill, BsThreeDots } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 import { db } from "../../shared/firebase";
 import { DetailMovie, DetailTV, FilmInfo } from "../../shared/types";
@@ -50,13 +50,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 
     if (!currentUser) {
       toast.error("You need to sign in to bookmark films", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        // position: "top-right"
       });
 
       return;
@@ -89,13 +83,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
           : "This film is removed from your bookmarks"
       }`,
       {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        // position: "top-right"
       }
     );
   };
@@ -125,7 +113,6 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
         </button>
       </div>
 
-      <ToastContainer />
 
       <div className="flex flex-col md:flex-row">
         {!isMobile && <SidebarMini />}

@@ -5,7 +5,7 @@ import { BiSend } from "react-icons/bi";
 import { db } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 interface NameProps {
   setIsUpdating: any;
 }
@@ -24,13 +24,7 @@ const Name: FunctionComponent<NameProps> = ({ setIsUpdating }) => {
 
     if (!firstNameValue.trim().length || !lastNameValue.trim().length) {
       toast.error("You gotta type something", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        // position: "top-right"
       });
       return;
     }
@@ -48,13 +42,7 @@ const Name: FunctionComponent<NameProps> = ({ setIsUpdating }) => {
         console.log(error);
         // alert(convertErrorCodeToMessage(error.code));
         toast.error(convertErrorCodeToMessage(error.code), {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // position: "top-right"
         });
       })
       .finally(() => setIsUpdating(false));
@@ -63,7 +51,6 @@ const Name: FunctionComponent<NameProps> = ({ setIsUpdating }) => {
   return (
     <>
       {" "}
-      <ToastContainer />
       <div>
         <p className="text-white text-lg">Name</p>
         {!isUpdatingName && (
