@@ -7,7 +7,7 @@ import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
 import { MdOutlineExplore } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
 import { auth } from "../../shared/firebase";
 import { useAppSelector } from "../../store/hooks";
@@ -29,13 +29,7 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
     signOut(auth)
       .then(() => {
         toast.success("Sign out successfully", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // position: "top-right",
         });
 
         setTimeout(() => {
@@ -48,14 +42,8 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 
   const personalPageHandler = (destinationUrl: string) => {
     if (!currentUser) {
-      toast.info("You need to login to use this feature", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      toast.error("You need to login to use this feature",  {
+        icon: 'ℹ️'
       });
 
       return;
@@ -65,9 +53,7 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
   };
 
   return (
-    <>
-      <ToastContainer />
-
+    <> 
       {isLoading && (
         <div className="z-10 tw-flex-center fixed top-0 left-0 w-full h-full">
           <div className="w-28 h-28 border-[10px] rounded-full border-primary border-t-transparent animate-spin "></div>

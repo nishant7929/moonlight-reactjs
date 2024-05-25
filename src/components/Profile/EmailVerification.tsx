@@ -4,7 +4,7 @@ import { auth } from "../../shared/firebase";
 import { convertErrorCodeToMessage } from "../../shared/utils";
 import { useAppSelector } from "../../store/hooks";
 
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 interface EmailVerificationProps {
   setIsUpdating: any;
 }
@@ -27,20 +27,13 @@ const EmailVerification: FunctionComponent<EmailVerificationProps> = ({
       })
       .catch((error) =>
         toast.error(convertErrorCodeToMessage(error.code), {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // position: "top-right"
         })
       )
       .finally(() => setIsUpdating(false));
   };
   return (
     <>
-      <ToastContainer />
       {isVerificationEmailSent && (
         <>
           <div className="px-5 py-3 rounded-md z-10 bg-dark-lighten-2 md:w-[500px] fixed top-[35%] md:left-[35%] left-[5%] right-[5%] min-h-[150px]">

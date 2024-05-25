@@ -5,7 +5,7 @@ import { BsBookmarkHeart } from "react-icons/bs";
 import { MdOutlineExplore } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useAppSelector } from "../../store/hooks";
 
 const SidebarMini: FunctionComponent = () => {
@@ -15,14 +15,8 @@ const SidebarMini: FunctionComponent = () => {
 
   const personalPageHandler = (destinationUrl: string) => {
     if (!currentUser) {
-      toast.info("You need to login to use this feature", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      toast.error("You need to login to use this feature", {
+          icon: 'ℹ️'
       });
 
       return;
@@ -33,7 +27,6 @@ const SidebarMini: FunctionComponent = () => {
 
   return (
     <>
-      <ToastContainer />
 
       <div className="shrink-0 max-w-[80px] w-full py-8 flex flex-col items-center justify-between h-screen sticky top-0">
         <Link to="/">

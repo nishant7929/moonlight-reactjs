@@ -19,6 +19,7 @@ import TVWatch from "./pages/TV/TVWatch";
 import { auth, db } from "./shared/firebase";
 import { useAppDispatch } from "./store/hooks";
 import { setCurrentUser } from "./store/slice/authSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const location = useLocation();
@@ -87,40 +88,44 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    toast.dismiss();
   }, [location.pathname, location.search]);
 
   return (
-    <Routes>
-      <Route index element={<Home />} />
-      <Route path="movie/:id" element={<MovieInfo />} />
-      <Route path="tv/:id" element={<TVInfo />} />
-      <Route path="movie/:id/watch" element={<MovieWatch />} />
-      <Route path="tv/:id/watch" element={<TVWatch />} />
-      <Route path="explore" element={<Explore />} />
-      <Route path="search" element={<Search />} />
-      <Route path="auth" element={<Auth />} />
-      <Route
-        path="bookmarked"
-        element={
-          <Protected isSignedIn={isSignedIn}>
-            <Bookmarked />
-          </Protected>
-        }
-      />
-      <Route
-        path="history"
-        element={<Protected isSignedIn={isSignedIn}>{<History />}</Protected>}
-      />
-      <Route
-        path="profile"
-        element={
-          <Protected isSignedIn={isSignedIn}>
-            <Profile />
-          </Protected>
-        }
-      />
-      <Route path="*" element={<Error />} />
-    </Routes>
+    <>
+      <Toaster />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="movie/:id" element={<MovieInfo />} />
+        <Route path="tv/:id" element={<TVInfo />} />
+        <Route path="movie/:id/watch" element={<MovieWatch />} />
+        <Route path="tv/:id/watch" element={<TVWatch />} />
+        <Route path="explore" element={<Explore />} />
+        <Route path="search" element={<Search />} />
+        <Route path="auth" element={<Auth />} />
+        <Route
+          path="bookmarked"
+          element={
+            <Protected isSignedIn={isSignedIn}>
+              <Bookmarked />
+            </Protected>
+          }
+        />
+        <Route
+          path="history"
+          element={<Protected isSignedIn={isSignedIn}>{<History />}</Protected>}
+        />
+        <Route
+          path="profile"
+          element={
+            <Protected isSignedIn={isSignedIn}>
+              <Profile />
+            </Protected>
+          }
+        />
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </>
   );
 }
 

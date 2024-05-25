@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 interface PasswordProps {
   setIsShowPromptReAuthFor: any;
   isUpdatedPassword: boolean;
@@ -15,7 +15,6 @@ const Password: FunctionComponent<PasswordProps> = ({
 }) => {
   return (
     <>
-      <ToastContainer />
 
       {isUpdatedPassword && (
         <>
@@ -44,13 +43,7 @@ const Password: FunctionComponent<PasswordProps> = ({
             if (!newPasswordValueRef.current.value.trim().length) {
               // alert();
               toast.error("You gotta type something", {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
+                // position: "top-right"
               });
               return;
             }

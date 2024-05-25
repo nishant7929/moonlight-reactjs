@@ -20,7 +20,7 @@ import Password from "../components/Profile/Password";
 import ProfileImage from "../components/Profile/ProfileImage";
 import { auth } from "../shared/firebase";
 import { convertErrorCodeToMessage } from "../shared/utils";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 interface ProfileProps {}
 
 const Profile: FunctionComponent<ProfileProps> = () => {
@@ -45,13 +45,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
     if (!oldPassword.trim().length) {
       // alert("You gotta type something");
       toast.error("You gotta type something", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        // position: "top-right"
       });
       return;
     }
@@ -82,13 +76,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
         console.log(error);
         // alert(convertErrorCodeToMessage(error.code));
         toast.error(convertErrorCodeToMessage(error.code), {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // position: "top-right"
         });
       });
   };
@@ -98,13 +86,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
 
     if (!emailValue.trim().length) {
       toast.error("You gotta type something", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        // position: "top-right"
       });
       return;
     }
@@ -118,13 +100,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
       .catch((error) => {
         console.log(error);
         toast.error(convertErrorCodeToMessage(error.code), {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // position: "top-right"
         });
       })
       .finally(() => setIsUpdating(false));
@@ -134,13 +110,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
     const newPassword = newPasswordValueRef.current.value;
     if (!newPassword.trim().length) {
       toast.error("You gotta type something", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        // position: "top-right"
       });
       return;
     }
@@ -154,13 +124,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
       .catch((error) => {
         console.log(error);
         toast.error(convertErrorCodeToMessage(error.code), {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // position: "top-right"
         });
       })
       .finally(() => setIsUpdating(false));
@@ -177,8 +141,6 @@ const Profile: FunctionComponent<ProfileProps> = () => {
   return (
     <>
       <Title value="Profile | Moonlight" />
-
-      <ToastContainer />
 
       <div className="flex md:hidden justify-between items-center px-5 my-5">
         <Link to="/" className="flex gap-2 items-center">
