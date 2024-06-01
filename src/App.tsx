@@ -20,6 +20,7 @@ import { auth, db } from "./shared/firebase";
 import { useAppDispatch } from "./store/hooks";
 import { setCurrentUser } from "./store/slice/authSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const location = useLocation();
@@ -94,6 +95,7 @@ function App() {
   return (
     <>
       <Toaster />
+      <Analytics/>
       <Routes>
         <Route index element={<Home />} />
         <Route path="movie/:id" element={<MovieInfo />} />
