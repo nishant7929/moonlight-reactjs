@@ -21,6 +21,7 @@ import { useAppDispatch } from "./store/hooks";
 import { setCurrentUser } from "./store/slice/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
   const location = useLocation();
@@ -95,7 +96,8 @@ function App() {
   return (
     <>
       <Toaster />
-      {/* <Analytics/> */}
+      <Analytics/>
+      <SpeedInsights/>
       <Routes>
         <Route index element={<Home />} />
         <Route path="movie/:id" element={<MovieInfo />} />
