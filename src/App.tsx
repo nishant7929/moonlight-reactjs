@@ -95,7 +95,7 @@ function App() {
   return (
     <>
       <Toaster />
-      <Analytics/>
+      {/* <Analytics/> */}
       <Routes>
         <Route index element={<Home />} />
         <Route path="movie/:id" element={<MovieInfo />} />
