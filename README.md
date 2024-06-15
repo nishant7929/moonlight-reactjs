@@ -4,7 +4,7 @@ Hot TV Show / Movie Watching Website
 
 ## Live demo
 
-Official website: [https://mymoonlight.vercel.app/](https://mymoonlight.vercel.app/)
+Official website: [https://moonlight-moviestore.vercel.app/](https://moonlight-moviestore.vercel.app/)
 
 ## Movie sources
 
