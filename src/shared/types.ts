@@ -10,7 +10,7 @@ export interface Item {
   vote_average: number;
 
   // Additional props
-  media_type: "movie" | "tv" | "person";
+  media_type: 'movie' | 'tv' | 'person';
 
   // Movie items
   release_date?: string;
@@ -60,7 +60,7 @@ export interface DetailMovie {
   video: boolean;
   vote_average: number;
   vote_count: number;
-  media_type?: "movie";
+  media_type?: 'movie';
 }
 
 export interface DetailTV {
@@ -130,7 +130,7 @@ export interface DetailTV {
   type: string;
   vote_average: number;
   vote_count: number;
-  media_type?: "tv";
+  media_type?: 'tv';
 }
 
 export interface Cast {

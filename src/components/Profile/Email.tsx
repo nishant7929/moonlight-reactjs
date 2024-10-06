@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-import { BiSend } from "react-icons/bi";
-import { useAppSelector } from "../../store/hooks";
+import { FunctionComponent } from 'react';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { BiSend } from 'react-icons/bi';
+import { useAppSelector } from '../../store/hooks';
 import toast from 'react-hot-toast';
 
 interface EmailProps {
@@ -12,66 +12,66 @@ interface EmailProps {
 }
 
 const Email: FunctionComponent<EmailProps> = ({
-  setIsShowPromptReAuthFor,
-  isUpdatingEmail,
-  setIsUpdatingEmail,
-  emailValueRef,
+	setIsShowPromptReAuthFor,
+	isUpdatingEmail,
+	setIsUpdatingEmail,
+	emailValueRef,
 }) => {
-  const currentUser = useAppSelector((state) => state.auth.user);
+	const currentUser = useAppSelector((state) => state.auth.user);
 
-  return (
-    <>
-      <div>
-        <p className="text-white text-lg">Email</p>
+	return (
+		<>
+			<div>
+				<p className="text-white text-lg">Email</p>
 
-        {!isUpdatingEmail && (
-          <div className="flex justify-between mt-1">
-            <p>{currentUser?.email}</p>
-            <button
-              className="hover:text-primary transition duration-300"
-              onClick={() => setIsUpdatingEmail(true)}
-            >
-              <AiOutlineEdit size={25} />
-            </button>
-          </div>
-        )}
+				{!isUpdatingEmail && (
+					<div className="flex justify-between mt-1">
+						<p>{currentUser?.email}</p>
+						<button
+							className="hover:text-primary transition duration-300"
+							onClick={() => setIsUpdatingEmail(true)}
+						>
+							<AiOutlineEdit size={25} />
+						</button>
+					</div>
+				)}
 
-        {isUpdatingEmail && (
-          <>
-            <form
-              // onSubmit={changeEmail}
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!emailValueRef.current.value.trim().length) {
-                  toast.error("You gotta type something", {
-                    // position: "top-right"
-                  });
-                  return;
-                }
-                setIsShowPromptReAuthFor("email");
-              }}
-              className="flex justify-between gap-48 mt-1"
-            >
-              <input
-                type="email"
-                ref={emailValueRef}
-                defaultValue={currentUser?.email || ""}
-                autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") setIsUpdatingEmail(false);
-                }}
-                className="outline-none bg-dark-lighten rounded-md py-1 px-2 w-full"
-              />
-              <button className="hover:text-primary transition duration-300">
-                <BiSend size={25} />
-              </button>
-            </form>
-            <p className="text-sm mt-1">Press Esc to cancel</p>
-          </>
-        )}
-      </div>
-    </>
-  );
+				{isUpdatingEmail && (
+					<>
+						<form
+							// onSubmit={changeEmail}
+							onSubmit={(e) => {
+								e.preventDefault();
+								if (!emailValueRef.current.value.trim().length) {
+									toast.error('You gotta type something', {
+										// position: "top-right"
+									});
+									return;
+								}
+								setIsShowPromptReAuthFor('email');
+							}}
+							className="flex justify-between gap-48 mt-1"
+						>
+							<input
+								type="email"
+								ref={emailValueRef}
+								defaultValue={currentUser?.email || ''}
+								autoFocus
+								onKeyDown={(e) => {
+									if (e.key === 'Escape') setIsUpdatingEmail(false);
+								}}
+								className="outline-none bg-dark-lighten rounded-md py-1 px-2 w-full"
+							/>
+							<button className="hover:text-primary transition duration-300">
+								<BiSend size={25} />
+							</button>
+						</form>
+						<p className="text-sm mt-1">Press Esc to cancel</p>
+					</>
+				)}
+			</div>
+		</>
+	);
 };
 
 export default Email;

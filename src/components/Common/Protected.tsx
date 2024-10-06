@@ -1,5 +1,5 @@
-import { FunctionComponent } from "react";
-import { Navigate } from "react-router-dom";
+import { FunctionComponent } from 'react';
+import { Navigate } from 'react-router-dom';
 
 interface ProtectedProps {
   isSignedIn: boolean;
@@ -7,11 +7,11 @@ interface ProtectedProps {
 }
 
 const Protected: FunctionComponent<ProtectedProps> = ({
-  isSignedIn,
-  children,
+	isSignedIn,
+	children,
 }) => {
-  if (!isSignedIn) return <Navigate to="/" replace />;
-  return <>{children}</>;
+	if (!isSignedIn) return <Navigate to="/" replace />;
+	return <>{children}</>;
 };
 
 export default Protected;

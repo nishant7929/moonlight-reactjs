@@ -1,4 +1,4 @@
-import { FC, HTMLProps } from "react";
+import { FC, HTMLProps } from 'react';
 
 interface SkeletonProps {
   className: string;
@@ -6,18 +6,18 @@ interface SkeletonProps {
 }
 
 const Skeleton: FC<HTMLProps<HTMLDivElement> | SkeletonProps> = ({
-  className,
-  children,
-  ...others
+	className,
+	children,
+	...others
 }) => {
-  return (
-    <div
-      className={`${className} animate-pulse bg-dark-lighten rounded-md `}
-      {...others}
-    >
-      {children}
-    </div>
-  );
+	return (
+		<div
+			className={`${className} animate-pulse bg-dark-lighten rounded-md `}
+			{...others}
+		>
+			{children}
+		</div>
+	);
 };
 
 export default Skeleton;
