@@ -2,6 +2,10 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Protected from './components/Common/Protected';
 import Auth from './pages/Auth';
@@ -19,9 +23,7 @@ import TVWatch from './pages/TV/TVWatch';
 import { auth, db } from './shared/firebase';
 import { useAppDispatch } from './store/hooks';
 import { setCurrentUser } from './store/slice/authSlice';
-import toast, { Toaster } from 'react-hot-toast';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import { API_URL } from './shared/constants';
 
 function App() {
 	const location = useLocation();
@@ -92,6 +94,22 @@ function App() {
 		window.scrollTo(0, 0);
 		toast.dismiss();
 	}, [location.pathname, location.search]);
+
+	useEffect(() => {
+		const isMovieDbAvailable = localStorage.getItem('moviedb');
+		if (!isMovieDbAvailable) {
+			const isMovieDbAPIWorking = async() => {
+				try {
+					await axios.get(`${API_URL}/configuration?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`);
+					localStorage.setItem('moviedb', 'true');
+					window.location.reload();
+				} catch (error) {
+					localStorage.setItem('moviedb', 'false');
+				}
+			};
+			isMovieDbAPIWorking();
+		}
+	}, []);
 
 	return (
 		<>

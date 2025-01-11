@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { PROXY_API_URL } from './constants';
 import { API_URL } from './constants';
-// console.log("abcd", process.env.REACT_APP_API_KEY);
 
-const API_KEY = '1cc28d7cb8202fa7566afa90c4a8b9f4';
+const API_KEY = process.env.REACT_APP_MOVIEDB_API_KEY;
 
 const instance = axios.create({
-	baseURL: API_URL,
+	baseURL: localStorage.getItem('moviedb') === 'true' ? API_URL : PROXY_API_URL,
 	params: {
-		api_key: API_KEY,
+		api_key: localStorage.getItem('moviedb') === 'true' ? API_KEY : undefined,
 	},
 });
 
