@@ -1,9 +1,9 @@
-import { EMBED_VIDSRC, IMAGE_URL } from './constants';
+import { EMBED_VIDSRC, IMAGE_URL, PROXY_IMAGE_URL } from './constants';
 
 export const resizeImage = (
 	imageUrl: string,
 	width = 'original'
-): string => `${IMAGE_URL}/${width}${imageUrl}`;
+): string => `${localStorage.getItem('moviedb') === 'true' ? IMAGE_URL: PROXY_IMAGE_URL}/${width}${imageUrl}`;
 
 // export const embedMovie = (id: number): string =>
 //   `${EMBED_URL}/movie?tmdb=${id}`;
