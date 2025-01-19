@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+// import { Analytics } from '@vercel/analytics/react';
+// import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Protected from './components/Common/Protected';
 import Auth from './pages/Auth';
@@ -114,8 +114,8 @@ function App() {
 	return (
 		<>
 			<Toaster />
-			<Analytics />
-			<SpeedInsights />
+			{/* <Analytics />
+			<SpeedInsights /> */}
 			<Routes>
 				<Route index element={<Home />} />
 				<Route path="movie/:id" element={<MovieInfo />} />
