@@ -4,10 +4,12 @@ import { User } from '../../shared/types';
 
 interface AuthState {
   user: User | null;
+  loading: boolean;
 }
 
 const initialState = {
 	user: null,
+	loading: true,
 } as AuthState;
 
 export const authSlice = createSlice({
@@ -16,6 +18,7 @@ export const authSlice = createSlice({
 	reducers: {
 		setCurrentUser: (state, action: PayloadAction<User | null>) => {
 			state.user = action.payload;
+			state.loading = false;
 		},
 	},
 });

@@ -1,25 +1,27 @@
-import { signOut } from 'firebase/auth';
-import { FC, useState } from 'react';
-import { AiOutlineHistory, AiOutlineHome } from 'react-icons/ai';
-import { BiSearch, BiUserCircle } from 'react-icons/bi';
-import { BsBookmarkHeart } from 'react-icons/bs';
-import { HiOutlineLogin, HiOutlineLogout } from 'react-icons/hi';
-import { MdOutlineExplore } from 'react-icons/md';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { useCurrentViewportView } from '../../hooks/useCurrentViewportView';
-import { auth } from '../../shared/firebase';
-import { useAppSelector } from '../../store/hooks';
+import { signOut } from "firebase/auth";
+import { FC, useState } from "react";
+import { AiOutlineHistory, AiOutlineHome } from "react-icons/ai";
+import { BiSearch, BiUserCircle } from "react-icons/bi";
+import { BsBookmarkHeart } from "react-icons/bs";
+import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
+import { MdOutlineExplore } from "react-icons/md";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useCurrentViewportView } from "../../hooks/useCurrentViewportView";
+import { auth } from "../../shared/firebase";
+import { useAppSelector } from "../../store/hooks";
 
 interface SidebarProps {
-  isSidebarActive: boolean;
-  setIsSidebarActive: any;
+	isSidebarActive: boolean;
+	setIsSidebarActive: any;
 }
 
 const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 	const location = useLocation();
-	const currentUser = useAppSelector((state) => state.auth.user);
+	const { user: currentUser, loading } = useAppSelector(
+		(state) => state.auth,
+	);
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 	const { isMobile } = useCurrentViewportView();
@@ -28,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 		setIsLoading(true);
 		signOut(auth)
 			.then(() => {
-				toast.success('Sign out successfully', {
+				toast.success("Sign out successfully", {
 					// position: "top-right",
 				});
 
@@ -42,8 +44,8 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 
 	const personalPageHandler = (destinationUrl: string) => {
 		if (!currentUser) {
-			toast.error('You need to login to use this feature',  {
-				icon: 'ℹ️'
+			toast.error("You need to login to use this feature", {
+				icon: "ℹ️",
 			});
 
 			return;
@@ -61,11 +63,11 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 			)}
 
 			<div
-				className={`shrink-0 md:max-w-[260px] w-[70vw] pl-8 top-0 pt-10  
+				className={`shrink-0 md:max-w-[260px] w-[70vw] pl-8 top-0 pt-10
         md:sticky md:translate-x-0 md:bg-transparent md:shadow-none
-    
+
       -translate-x-full fixed h-screen shadow-md transition duration-300 bg-dark-lighten z-50 ${
-		isSidebarActive && 'translate-x-0'
+			isSidebarActive && "translate-x-0"
 		}`}
 			>
 				{!isMobile && (
@@ -85,17 +87,17 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 
 				<div
 					className={`text-white text-lg font-medium ${
-						isSidebarActive ? '-mt-6' : 'mt-12'
+						isSidebarActive ? "-mt-6" : "mt-12"
 					}`}
 				>
-          MENU
+					MENU
 				</div>
 				<div className="mt-8 ml-4 flex flex-col gap-6">
 					<Link
 						to="/"
 						className={`flex gap-6 items-center  ${
-							location.pathname === '/' &&
-              '!text-primary border-r-4 border-primary font-medium'
+							location.pathname === "/" &&
+							"!text-primary border-r-4 border-primary font-medium"
 						} hover:text-white transition duration-300`}
 					>
 						<AiOutlineHome size={25} />
@@ -105,8 +107,8 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 					<Link
 						to="/explore"
 						className={`flex gap-6 items-center  ${
-							location.pathname === '/explore' &&
-              '!text-primary border-r-4 border-primary font-medium'
+							location.pathname === "/explore" &&
+							"!text-primary border-r-4 border-primary font-medium"
 						} hover:text-white transition duration-300`}
 					>
 						<MdOutlineExplore size={25} />
@@ -127,8 +129,8 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 					<Link
 						to="/search"
 						className={`flex gap-6 items-center  ${
-							location.pathname === '/search' &&
-              '!text-primary border-r-4 border-primary font-medium'
+							location.pathname === "/search" &&
+							"!text-primary border-r-4 border-primary font-medium"
 						} hover:text-white transition duration-300`}
 					>
 						<BiSearch size={25} />
@@ -136,13 +138,15 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 					</Link>
 				</div>
 
-				<div className="text-white text-lg font-medium mt-12">PERSONAL</div>
+				<div className="text-white text-lg font-medium mt-12">
+					PERSONAL
+				</div>
 				<div className="mt-8 ml-4 flex flex-col gap-6">
 					<button
-						onClick={() => personalPageHandler('/bookmarked')}
+						onClick={() => personalPageHandler("/bookmarked")}
 						className={`flex gap-6 items-center  ${
-							location.pathname === '/bookmarked' &&
-              '!text-primary border-r-4 border-primary font-medium'
+							location.pathname === "/bookmarked" &&
+							"!text-primary border-r-4 border-primary font-medium"
 						} hover:text-white transition duration-300`}
 					>
 						<BsBookmarkHeart size={25} />
@@ -150,10 +154,10 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 					</button>
 
 					<button
-						onClick={() => personalPageHandler('/history')}
+						onClick={() => personalPageHandler("/history")}
 						className={`flex gap-6 items-center  ${
-							location.pathname === '/history' &&
-              '!text-primary border-r-4 border-primary font-medium'
+							location.pathname === "/history" &&
+							"!text-primary border-r-4 border-primary font-medium"
 						} hover:text-white transition duration-300`}
 					>
 						<AiOutlineHistory size={25} />
@@ -161,20 +165,23 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 					</button>
 				</div>
 
-				<div className="text-white text-lg font-medium mt-12">GENERAL</div>
+				<div className="text-white text-lg font-medium mt-12">
+					GENERAL
+				</div>
 				<div className="mt-8 ml-4 flex flex-col gap-6">
 					<button
-						onClick={() => personalPageHandler('/profile')}
+						onClick={() => personalPageHandler("/profile")}
 						className={`flex gap-6 items-center  ${
-							location.pathname === '/profile' &&
-              '!text-primary border-r-4 border-primary font-medium'
+							location.pathname === "/profile" &&
+							"!text-primary border-r-4 border-primary font-medium"
 						} hover:text-white transition duration-300`}
 					>
 						<BiUserCircle size={25} />
 						<p>Profile</p>
 					</button>
-
-					{!currentUser && (
+					{loading ? (
+						<div className="mx-[40px] h-8 w-8 rounded-full border-[4px] border-dark-lighten border-t-transparent animate-spin"></div>
+					) : !currentUser ? (
 						<Link
 							to={`/auth?redirect=${encodeURIComponent(location.pathname)}`}
 							className="flex gap-5 items-center"
@@ -182,9 +189,7 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 							<HiOutlineLogin size={30} />
 							<p>Login</p>
 						</Link>
-					)}
-
-					{currentUser && (
+					) : (
 						<button
 							onClick={signOutHandler}
 							className="flex gap-5 items-center"
@@ -199,7 +204,9 @@ const Sidebar: FC<SidebarProps> = ({ isSidebarActive, setIsSidebarActive }) => {
 			<div
 				onClick={() => setIsSidebarActive(false)}
 				className={`bg-black/60 z-[5] fixed top-0 left-0 w-full h-full md:opacity-100 transition duration-300 ${
-					isSidebarActive ? 'opacity-100 visible' : 'opacity-0 invisible'
+					isSidebarActive
+						? "opacity-100 visible"
+						: "opacity-0 invisible"
 				}`}
 			></div>
 		</>

@@ -27,7 +27,7 @@ import FilmTabInfo from './FilmTabInfo';
 import { MdCheck } from 'react-icons/md';
 import { BiBookmark } from 'react-icons/bi';
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
-	const currentUser = useAppSelector((state) => state.auth.user);
+	const { user: currentUser, loading } = useAppSelector((state) => state.auth);
 	const [firebaseData, setFirebaseData] = useState<FirebaseType | undefined>(undefined)
 	const [isBookmarked, setIsBookmarked] = useState(false);
 	const [alreadyWatched, setAlreadyWatched] = useState(false);
@@ -220,41 +220,49 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 									)}
 								</div>
 								<div className="flex gap-3 absolute top-[5%] right-[3%]">
-									<button
-										onClick={historyHandler}
-										className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
-											alreadyWatched && '!border-primary'
-										}`}
-									>
-										<MdCheck
-											size={20}
-											className={`text-white group-hover:text-primary transition duration-300 ${
-												alreadyWatched && '!text-primary'
+									{
+										loading
+										? <div className="mx-[40px] h-8 w-8 rounded-full border-[4px] border-dark-lighten border-t-transparent animate-spin"></div>
+										: <>
+											<button
+											onClick={historyHandler}
+											className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
+												alreadyWatched && '!border-primary'
 											}`}
-										/>
-									</button>
-									<button
-										onClick={bookmarkedHandler}
-										className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
-											isBookmarked && '!border-primary'
-										}`}
-									>
-										{
-											isBookmarked
-											? <BsFillBookmarkFill
+										>
+											<MdCheck
 												size={20}
 												className={`text-white group-hover:text-primary transition duration-300 ${
-													isBookmarked && '!text-primary'
+													alreadyWatched && '!text-primary'
 												}`}
 											/>
-											: <BiBookmark
-												size={20}
-												className={`text-white group-hover:text-primary transition duration-300 ${
-													isBookmarked && '!text-primary'
-												}`}
-											/>
-										}
-									</button>
+										</button>
+										<button
+											onClick={bookmarkedHandler}
+											className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
+												isBookmarked && '!border-primary'
+											}`}
+										>
+											{
+												isBookmarked
+												? <BsFillBookmarkFill
+													size={20}
+													className={`text-white group-hover:text-primary transition duration-300 ${
+														isBookmarked && '!text-primary'
+													}`}
+												/>
+												: <BiBookmark
+													size={20}
+													className={`text-white group-hover:text-primary transition duration-300 ${
+														isBookmarked && '!text-primary'
+													}`}
+												/>
+											}
+										</button>
+										</>
+									}
+
+
 									{/* {!isMobile && (
 										<>
 											<button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
