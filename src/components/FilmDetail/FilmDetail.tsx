@@ -1,5 +1,4 @@
 import {
-	arrayRemove,
 	arrayUnion,
 	doc,
 	onSnapshot,
@@ -7,15 +6,14 @@ import {
 } from 'firebase/firestore';
 import { FC, useEffect, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
-import { AiFillHeart } from 'react-icons/ai';
-import { BsFillPlayFill, BsShareFill, BsThreeDots } from 'react-icons/bs';
+import { BsFillBookmarkFill, BsFillPlayFill } from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCurrentViewportView } from '../../hooks/useCurrentViewportView';
 import { db } from '../../shared/firebase';
-import { DetailMovie, DetailTV, FilmInfo } from '../../shared/types';
+import { DetailMovie, DetailTV, FilmInfo, FirebaseType } from '../../shared/types';
 import { resizeImage } from '../../shared/utils';
 import { useAppSelector } from '../../store/hooks';
 import RightbarFilms from '../Common/RightbarFilms';
@@ -26,9 +24,13 @@ import Skeleton from '../Common/Skeleton';
 import Title from '../Common/Title';
 import Footer from '../Footer/Footer';
 import FilmTabInfo from './FilmTabInfo';
+import { MdCheck } from 'react-icons/md';
+import { BiBookmark } from 'react-icons/bi';
 const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 	const currentUser = useAppSelector((state) => state.auth.user);
+	const [firebaseData, setFirebaseData] = useState<FirebaseType | undefined>(undefined)
 	const [isBookmarked, setIsBookmarked] = useState(false);
+	const [alreadyWatched, setAlreadyWatched] = useState(false);
 	const { isMobile } = useCurrentViewportView();
 	const [isSidebarActive, setIsSidebarActive] = useState(false);
 	useEffect(() => {
@@ -37,8 +39,12 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 		}
 
 		const unsubDoc = onSnapshot(doc(db, 'users', currentUser.uid), (doc) => {
+			setFirebaseData(doc.data() ? doc.data() as FirebaseType : undefined)
 			setIsBookmarked(
 				doc.data()?.bookmarks.some((item: any) => item.id === detail?.id)
+			);
+			setAlreadyWatched(
+				doc.data()?.history.some((item: any) => item.id === detail?.id)
 			);
 		});
 
@@ -55,6 +61,8 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 
 			return;
 		}
+		const currentBookmarks = firebaseData?.bookmarks || [];
+		const updatedBookmarks = currentBookmarks.filter(bookmark => bookmark.id !== detail.id);
 
 		await updateDoc(doc(db, 'users', currentUser.uid), {
 			bookmarks: !isBookmarked
@@ -66,25 +74,49 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 					...(detail?.media_type === 'movie' && { title: detail?.title }),
 					...(detail?.media_type === 'tv' && { name: detail?.name }),
 				})
-				: arrayRemove({
+				: updatedBookmarks,
+		});
+
+		toast.success(
+			`${
+				!isBookmarked
+					? `${detail?.media_type === 'movie' ? 'Movie': 'TV Show'} is now bookmarked`
+					: `${detail?.media_type === 'movie' ? 'Movie': 'TV Show'} is removed from your bookmarks`
+			}`
+		);
+	};
+
+	const historyHandler = async() => {
+		if (!detail) return;
+
+		if (!currentUser) {
+			toast.error('You need to sign in to add films in already watched.', {
+				// position: "top-right"
+			});
+
+			return;
+		}
+		const currentHistory = firebaseData?.history || [];
+		const updatedHistory = currentHistory.filter(history => history.id !== detail.id);
+		await updateDoc(doc(db, 'users', currentUser.uid), {
+			history: !alreadyWatched
+				? arrayUnion({
 					poster_path: detail?.poster_path,
 					id: detail?.id,
 					vote_average: detail?.vote_average,
 					media_type: detail?.media_type,
 					...(detail?.media_type === 'movie' && { title: detail?.title }),
 					...(detail?.media_type === 'tv' && { name: detail?.name }),
-				}),
+				})
+				: updatedHistory,
 		});
 
 		toast.success(
 			`${
-				!isBookmarked
-					? 'This film is now bookmarked'
-					: 'This film is removed from your bookmarks'
-			}`,
-			{
-				// position: "top-right"
-			}
+				!alreadyWatched
+					? `${detail?.media_type === 'movie' ? 'Movie': 'TV Show'} added to history`
+					: `${detail?.media_type === 'movie' ? 'Movie': 'TV Show'} removed from history`
+			}`
 		);
 	};
 
@@ -189,19 +221,41 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 								</div>
 								<div className="flex gap-3 absolute top-[5%] right-[3%]">
 									<button
+										onClick={historyHandler}
+										className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
+											alreadyWatched && '!border-primary'
+										}`}
+									>
+										<MdCheck
+											size={20}
+											className={`text-white group-hover:text-primary transition duration-300 ${
+												alreadyWatched && '!text-primary'
+											}`}
+										/>
+									</button>
+									<button
 										onClick={bookmarkedHandler}
 										className={`tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group ${
 											isBookmarked && '!border-primary'
 										}`}
 									>
-										<AiFillHeart
-											size={20}
-											className={`text-white group-hover:text-primary transition duration-300 ${
-												isBookmarked && '!text-primary'
-											}`}
-										/>
+										{
+											isBookmarked
+											? <BsFillBookmarkFill
+												size={20}
+												className={`text-white group-hover:text-primary transition duration-300 ${
+													isBookmarked && '!text-primary'
+												}`}
+											/>
+											: <BiBookmark
+												size={20}
+												className={`text-white group-hover:text-primary transition duration-300 ${
+													isBookmarked && '!text-primary'
+												}`}
+											/>
+										}
 									</button>
-									{!isMobile && (
+									{/* {!isMobile && (
 										<>
 											<button className="tw-flex-center h-12 w-12 rounded-full border-[3px] border-white shadow-lg hover:border-primary transition duration-300 group">
 												<BsShareFill
@@ -216,7 +270,7 @@ const FilmDetail: FC<FilmInfo> = ({ similar, videos, detail, ...others }) => {
 												/>
 											</button>
 										</>
-									)}
+									)} */}
 								</div>
 							</div>
 						</div>

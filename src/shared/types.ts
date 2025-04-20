@@ -289,3 +289,12 @@ export interface getRecommendGenres2Type {
   movieGenres: { id: number; name: string }[];
   tvGenres: { id: number; name: string }[];
 }
+
+
+export interface FirebaseType {
+	firstName: string;
+	lastName: string;
+	photoUrl: string;
+	bookmarks: Item[];
+	history: Item[];
+}

@@ -43,7 +43,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
 				lastName: values.lastName,
 				photoUrl: getRandomAvatar(),
 				bookmarks: [],
-				recentlyWatch: [],
+				history: [],
 			});
 		} catch (error: any) {
 			setError(convertErrorCodeToMessage(error.code));
@@ -130,7 +130,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
 								/>
 								<label
 									htmlFor="firstName"
-									className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none 
+									className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none
                 translate-y-[-50%] visible peer-placeholder-shown:opacity-0 peer-placeholder-shown:invisible peer-placeholder-shown:translate-y-[-10%] ease-in-out
                 `}
 								>
@@ -154,7 +154,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
 								/>
 								<label
 									htmlFor="lastName"
-									className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none 
+									className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none
                 translate-y-[-50%] visible peer-placeholder-shown:opacity-0 peer-placeholder-shown:invisible peer-placeholder-shown:translate-y-[-10%] ease-in-out
                 `}
 								>
@@ -178,7 +178,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
 							/>
 							<label
 								htmlFor="email"
-								className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none 
+								className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none
                 translate-y-[-50%] visible peer-placeholder-shown:opacity-0 peer-placeholder-shown:invisible peer-placeholder-shown:translate-y-[-10%] ease-in-out
                 `}
 							>
@@ -201,7 +201,7 @@ const SignUp: FunctionComponent<SignUpProps> = ({ setIsSignIn, isSignIn }) => {
 							/>
 							<label
 								htmlFor="password"
-								className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none 
+								className={`absolute left-5 text-gray-400 transition duration-500 pointer-events-none
                 translate-y-[-50%] visible peer-placeholder-shown:opacity-0 peer-placeholder-shown:invisible peer-placeholder-shown:translate-y-[-10%] ease-in-out
                 `}
 							>

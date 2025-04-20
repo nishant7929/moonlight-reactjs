@@ -32,7 +32,7 @@ export const signInWithProvider = (provider: any, type: string) => {
 				photoUrl: user.photoURL + '?access_token=' + token,
 			}),
 			bookmarks: [],
-			recentlyWatch: [],
+			history: [],
 			...(type === 'facebook' && { token }),
 		});
 	});

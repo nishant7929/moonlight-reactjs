@@ -72,7 +72,7 @@ const FilmListViewForBookmarkAndHistory: FunctionComponent<
 
 		updateDoc(doc(db, 'users', currentUser?.uid), {
 			...(pageType === 'bookmark' && { bookmarks: editedFilms.reverse() }),
-			...(pageType === 'history' && { recentlyWatch: editedFilms.reverse() }),
+			...(pageType === 'history' && { history: editedFilms.reverse() }),
 		});
 
 		setSelections([]);

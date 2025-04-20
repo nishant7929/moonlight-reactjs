@@ -11,9 +11,9 @@ interface HistoryProps {}
 
 const History: FunctionComponent<HistoryProps> = () => {
 	const currentUser = useAppSelector((state) => state.auth.user);
-	const [recentlyWatchFilms, setRecentlyWatchFilms] = useState<Item[]>([]);
+	const [history, setFilmsHistory] = useState<Item[]>([]);
 	const [isLoading, setIsLoading] = useState(
-		!recentlyWatchFilms.length
+		!history.length
 	);
 	const [isError, setIsError] = useState(false);
 
@@ -23,12 +23,12 @@ const History: FunctionComponent<HistoryProps> = () => {
 		const unsubDoc = onSnapshot(
 			doc(db, 'users', currentUser?.uid),
 			(doc) => {
-				setRecentlyWatchFilms(doc.data()?.recentlyWatch.slice().reverse());
+				setFilmsHistory(doc.data()?.history?.slice().reverse() || []);
 				setIsLoading(false);
 			},
 			(error) => {
 				alert(error);
-				setRecentlyWatchFilms([]);
+				setFilmsHistory([]);
 				setIsLoading(false);
 				setIsError(true);
 			}
@@ -43,7 +43,7 @@ const History: FunctionComponent<HistoryProps> = () => {
 		<>
 			<Title value="History | Moonlight" />
 			<FilmListViewForBookmarkAndHistory
-				films={recentlyWatchFilms}
+				films={history}
 				isLoading={isLoading}
 				pageType="history"
 			/>
